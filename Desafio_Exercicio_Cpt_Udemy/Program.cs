@@ -1,50 +1,79 @@
-﻿using Desafio_Exercicio_Cpt_Udemy;
+﻿using Desafio;
 using System;
 using System.Globalization;
 
 namespace MyApp
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            Conta conta;
+            ContaBancaria conta;
 
-            Console.WriteLine("entre com o número da conta: ");
+            Console.WriteLine("Informe o número da conta: ");
             int n = int.Parse(Console.ReadLine());
-            Console.WriteLine("entre com o titular da conta: ");
+            Console.WriteLine("Informe o titular da conta: ");
             string t = Console.ReadLine();
-            Console.WriteLine("haverá depósito inicial (s/n)? ");
-            char d = char.Parse(Console.ReadLine());
+            Console.WriteLine("Haverá depósito inicial? ");
+            char resp = char.Parse(Console.ReadLine());
 
-            if (d == 's' || d == 'S')
+            if (resp == 's' || resp == 'S')
             {
-                Console.WriteLine("entre com o valor de depósito inicial: ");
-                double valor = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                conta = new Conta(t, n, valor);
+                Console.WriteLine("Informe o valor do depósito inicial (S/N): ");
+                double di = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                conta = new ContaBancaria(n, t, di);
             }
             else
-            {       
-                 conta = new Conta(t, n);
+            {
+                conta = new ContaBancaria(n, t);
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Dados da conta:");
             Console.WriteLine(conta);
 
             Console.WriteLine();
-            Console.Write("Entre um valor para depósito: ");
-            double quantia = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            conta.Deposito(quantia);
-            Console.WriteLine("Dados da conta atualizados:");
+            Console.WriteLine("Informe o valor para depóstito: ");
+            double df = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            conta.Deposito(df);
+
+            Console.WriteLine();
             Console.WriteLine(conta);
 
             Console.WriteLine();
-            Console.Write("Entre um valor para saque: ");
-            quantia = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            conta.Saque(quantia);
-            Console.WriteLine("Dados da conta atualizados:");
+            Console.WriteLine("Informe o valor do saque: ");
+            double saque = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            conta.Saque(saque);
+
+            Console.WriteLine();
             Console.WriteLine(conta);
+
+            Console.WriteLine();
+            Console.WriteLine("Deseja realizar uma nova operação (s/n)? ");
+            resp = char.Parse(Console.ReadLine());
+
+            while (resp == 's' || resp == 'S')
+            {
+                Console.WriteLine("Qual operação você quer fazer? S para saque e D para deposito:");
+                char resposta = char.Parse(Console.ReadLine());
+                if (resposta == 's' || resposta == 'S')
+                {
+                    Console.WriteLine("Qual o valor do saque? ");
+                    df = double.Parse(Console.ReadLine());
+                    conta.Saque(df);
+                    Console.WriteLine(conta);
+                }
+                else
+                {
+                    Console.WriteLine("Qual o valor do depósito? ");
+                    df = double.Parse(Console.ReadLine());
+                    conta.Deposito(df);
+                    Console.WriteLine(conta);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Deseja realizar uma nova operação (s/n)? ");
+                resp = char.Parse(Console.ReadLine());
+            }
+            Console.WriteLine("Obrigado, volte sempre!");
         }
     }
 }
